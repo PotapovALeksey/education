@@ -1,0 +1,14 @@
+LICENSE
+README.md
+setup.py
+clean_folder/__init__.py
+clean_folder/main.py
+clean_folder/normalize.py
+clean_folder/regexp.py
+clean_folder/report.py
+clean_folder/sort.py
+clean_folder.egg-info/PKG-INFO
+clean_folder.egg-info/SOURCES.txt
+clean_folder.egg-info/dependency_links.txt
+clean_folder.egg-info/entry_points.txt
+clean_folder.egg-info/top_level.txt

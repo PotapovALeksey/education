@@ -1,8 +1,8 @@
 import sys
 from datetime import datetime
 from pathlib import Path
-from report import get_report
-from sort import sort
+from clean_folder.report import get_report
+from clean_folder.sort import sort
 
 class DirectoryNotFound(Exception):
     pass
@@ -24,6 +24,8 @@ def clean_folder():
         log_file_name = f'{start_time}_log.txt'
         with open(path / log_file_name, 'w') as log_file:
             log_file.write(report_text)
+
+        print(f'The folder is cleared successfully.\nYou can check detail information in the file {path / log_file_name}')
 
 
     except IndexError:
