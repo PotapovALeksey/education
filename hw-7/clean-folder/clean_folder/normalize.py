@@ -1,5 +1,5 @@
 import re
-from clean_folder.regexp import ARCHIVE_REGEXP
+from .regexp import ARCHIVE_REGEXP
 
 symbols = ("абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
            "abvgdeejzijklmnoprstufhzcss_y_euaABVGDEEJZIJKLMNOPRSTUFHZCSS_Y_EUA")

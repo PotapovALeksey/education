@@ -1,8 +1,8 @@
 import sys
 from datetime import datetime
 from pathlib import Path
-from clean_folder.report import get_report
-from clean_folder.sort import sort
+from .report import get_report
+from .sort import sort
 
 class DirectoryNotFound(Exception):
     pass

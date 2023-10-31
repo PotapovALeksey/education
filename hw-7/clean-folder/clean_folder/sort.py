@@ -1,8 +1,8 @@
-from clean_folder.normalize import normalize, clear_archive_name
+from .normalize import normalize, clear_archive_name
 from pathlib import Path
 import re
-from clean_folder.report import *
-from clean_folder.regexp import *
+from .report import *
+from .regexp import *
 import shutil
 
 ARCHIVES_DIRECTORY_NAME = 'archives'
