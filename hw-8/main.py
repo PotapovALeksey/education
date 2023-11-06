@@ -1,13 +1,13 @@
 from datetime import date, timedelta
 from collections import defaultdict
 
-WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+WEEKDAYS = ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday')
 SATURDAY = 5
 SUNDAY = 6
 WEEKENDS = {SATURDAY, SUNDAY}
 
 def is_birthday_in_current_week(birthday: date, start_date: date, end_date: date):
-    return start_date <= birthday and birthday <= end_date
+    return start_date <= birthday <= end_date
 
 
 def get_birthdays_per_week(users):
