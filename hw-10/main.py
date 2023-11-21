@@ -31,7 +31,7 @@ class Phone(Field):
 
 
 class Record:
-    def __init__(self, name: str, phones: [Phone] = []):
+    def __init__(self, name: str, phones: list[Phone] = []):
         self.name = Name(name)
         self.phones = phones
 
@@ -61,7 +61,7 @@ class Record:
 
 
 class AddressBook(UserDict):
-    def __init__(self, records: [Record] = []):
+    def __init__(self, records: list[Record] = []):
         self.data = { [record.name]: record for record in records }
 
     def add_record(self, record: Record):
@@ -76,3 +76,4 @@ class AddressBook(UserDict):
         self.data.pop(name, None)
 
         return self.data
+
