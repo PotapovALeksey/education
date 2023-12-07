@@ -4,6 +4,7 @@ from csv import DictWriter, DictReader
 from random import randint
 from record import Record
 from pathlib import Path
+from storages.storage import Storage
 
 DEFAULT_STORAGE_PATH = Path('db', 'contacts-db.csv')
 FIELD_NAMES = ['name', 'birthday', 'phones']
@@ -14,15 +15,15 @@ def is_header_row(row):
 
 
 class AddressBook(UserDict):
-    def __init__(self, records: list[Record] = [], storage_path = DEFAULT_STORAGE_PATH.resolve(), pagination_size: int = 50):
+    def __init__(self, records: list[Record] = [], storage: Storage = Storage(), pagination_size: int = 50):
         self.pagination_size = pagination_size
-        self.storage_path = storage_path
+        self.storage = storage
         self.pagination_offset = 0
 
-        stored_contacts = self.get_contacts_from_storage()
+        stored_contacts = self.storage.get_contacts_from_storage()
         self.data = {record.name.value: record for record in [*stored_contacts, *records]}
 
-        self.update_storage()
+        self.storage.update_storage()
 
     def __iter__(self):
         return self
@@ -70,7 +71,7 @@ class AddressBook(UserDict):
 
     def add_record(self, record: Record):
         self.data[record.name.value] = record
-        self.update_storage()
+        self.storage.update_storage()
 
         return self.data
 
@@ -79,7 +80,7 @@ class AddressBook(UserDict):
 
     def delete(self, name: str):
         self.data.pop(name, None)
-        self.update_storage()
+        self.storage.update_storage()
 
         return self.data
 
@@ -106,4 +107,4 @@ address_book = AddressBook()
 #     print(item)
 
 
-print(len(address_book.search('066')))
+print(len(address_book.search()))
