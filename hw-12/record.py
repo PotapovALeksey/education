@@ -5,8 +5,6 @@ from datetime import date
 
 
 class Record:
-    PHONE_SEPARATOR = '|'
-
     def __init__(self, name: str, birthday: date = None, phones: list[str] = []):
         self.name = Name(name)
         self.phones = list(map(lambda phone: Phone(phone), phones))
@@ -49,14 +47,3 @@ class Record:
         closest_birthday.replace(year=closest_birthday.year + 1)
 
         return (closest_birthday - today).days
-
-    def serialize(self):
-        return {
-            "phones": self.PHONE_SEPARATOR.join(list(map(lambda phone: phone.serialize(), self.phones))),
-            "name": self.name.serialize(),
-            "birthday": self.birthday.serialize(),
-        }
-
-    @classmethod
-    def deserialize(cls, record):
-        return cls(record['name'], Birthday.deserialize(record['birthday']), record['phones'].split(cls.PHONE_SEPARATOR))

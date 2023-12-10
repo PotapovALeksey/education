@@ -1,21 +1,16 @@
 from collections import UserDict
 from datetime import date
-from csv import DictWriter, DictReader
 from random import randint
 from record import Record
 from pathlib import Path
 from storages.storage import Storage
+from storages.csv_storage import CSVStorage
 
-DEFAULT_STORAGE_PATH = Path('db', 'contacts-db.csv')
+CSV_STORAGE_PATH = Path('db', 'contacts-db.csv')
 FIELD_NAMES = ['name', 'birthday', 'phones']
 
-
-def is_header_row(row):
-    return row['name'] == 'name' and row['phones'] == 'phones' and row['birthday'] == 'birthday'
-
-
 class AddressBook(UserDict):
-    def __init__(self, records: list[Record] = [], storage: Storage = Storage(), pagination_size: int = 50):
+    def __init__(self, storage: Storage, records: list[Record] = [], pagination_size: int = 50):
         self.pagination_size = pagination_size
         self.storage = storage
         self.pagination_offset = 0
@@ -23,7 +18,7 @@ class AddressBook(UserDict):
         stored_contacts = self.storage.get_contacts_from_storage()
         self.data = {record.name.value: record for record in [*stored_contacts, *records]}
 
-        self.storage.update_storage()
+        self.storage.update_storage(self.data.values())
 
     def __iter__(self):
         return self
@@ -42,36 +37,9 @@ class AddressBook(UserDict):
         iteration = StopIteration
         raise iteration
 
-    def get_contacts_from_storage(self):
-        contacts = []
-
-        try:
-            with open(self.storage_path, 'r', newline='') as file:
-                reader = DictReader(file, fieldnames=FIELD_NAMES)
-
-                for row in reader:
-                    if is_header_row(row):
-                        continue
-
-                    contacts.append(Record.deserialize(row))
-
-        except FileNotFoundError:
-            pass
-
-        return contacts
-
-    def update_storage(self):
-        with open(self.storage_path, 'w', newline='') as file:
-            writer = DictWriter(file, fieldnames=FIELD_NAMES)
-
-            writer.writeheader()
-
-            for record in self.data.values():
-                writer.writerow(record.serialize())
-
     def add_record(self, record: Record):
         self.data[record.name.value] = record
-        self.storage.update_storage()
+        self.storage.update_storage(self.data.values())
 
         return self.data
 
@@ -80,7 +48,7 @@ class AddressBook(UserDict):
 
     def delete(self, name: str):
         self.data.pop(name, None)
-        self.storage.update_storage()
+        self.storage.update_storage(self.data.values())
 
         return self.data
 
@@ -101,10 +69,10 @@ class AddressBook(UserDict):
 records = [Record(f'John - {i}', date(year=int(f'19{randint(11, 99)}'), month=randint(1, 12), day=randint(1,28)), ['0638501099', '0671234567']) for i in range(0, 20)]
 # records = [Record('Ivan', date(year=1994, month=11, day=18))]
 
-address_book = AddressBook()
-
+address_book = AddressBook(CSVStorage(CSV_STORAGE_PATH, FIELD_NAMES))
+# address_book.add_record(Record('BREZENK', date(year=1994, month=11, day=18)))
 # for item in address_book:
 #     print(item)
 
 
-print(len(address_book.search()))
+print(address_book.search('BREZENK'))
