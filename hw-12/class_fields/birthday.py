@@ -14,10 +14,3 @@ class Birthday(Field):
     def validate(self, value):
         if value is not None and type(value) != date:
             raise ValueError('The birthday must be a date type')
-
-    def serialize(self):
-        return self.value.strftime(self.DATE_FORMAT)
-
-    @classmethod
-    def deserialize(cls, value: str):
-        return datetime.strptime(value, cls.DATE_FORMAT).date()

@@ -66,8 +66,7 @@ class AddressBook(UserDict):
         ))
 
 
-records = [Record(f'John - {i}', date(year=int(f'19{randint(11, 99)}'), month=randint(1, 12), day=randint(1,28)), ['0638501099', '0671234567']) for i in range(0, 20)]
-# records = [Record('Ivan', date(year=1994, month=11, day=18))]
+# records = [Record(f'Ivan - {i}', date(year=int(f'19{randint(11, 99)}'), month=randint(1, 12), day=randint(1,28)), ['0638501099', '0671234567']) for i in range(0, 20)]
 
 address_book = AddressBook(CSVStorage(CSV_STORAGE_PATH, FIELD_NAMES))
 # address_book.add_record(Record('BREZENK', date(year=1994, month=11, day=18)))

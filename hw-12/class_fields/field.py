@@ -17,10 +17,3 @@ class Field:
 
     def validate(self, value):
         pass
-
-    def serialize(self):
-        return self.value
-
-    @staticmethod
-    def deserialize(value):
-        return value
